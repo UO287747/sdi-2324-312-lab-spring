@@ -1,5 +1,6 @@
 package com.uniovi.notaneitor.controllers;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.uniovi.notaneitor.entities.Mark;
 import com.uniovi.notaneitor.entities.Professor;
 import com.uniovi.notaneitor.services.MarksService;
@@ -44,5 +45,17 @@ public class ProfessorsController {
     public String deleteProfessor(@PathVariable Long id) {
         professorsService.deleteProfessor(id);
         return "redirect:/professor/list";
+    }
+
+    @RequestMapping(value = "/professor/edit/{id}")
+    public String getEdit(Model model, @PathVariable Long id) {
+        model.addAttribute("professor", professorsService.getProfessor(id));
+        return "professor/edit";
+    }
+    @RequestMapping(value="/professor/edit/{id}", method=RequestMethod.POST)
+    public String setEdit(@ModelAttribute Professor professor, @PathVariable Long id){
+        professor.setId(id);
+        professorsService.addProfessor(professor);
+        return "redirect:/professor/details/"+id;
     }
 }

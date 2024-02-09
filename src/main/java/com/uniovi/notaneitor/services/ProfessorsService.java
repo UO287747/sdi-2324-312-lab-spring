@@ -11,9 +11,9 @@ import java.util.List;
 public class ProfessorsService {
 
     private Professor[] defaultProfessors = {
-            new Professor("364356X", "Toni", "Cuquerella", "Profesor Titular"),
-            new Professor("364356X", "Toni", "Cuquerella", "Profesor Titular"),
-            new Professor("364356X", "Toni", "Cuquerella", "Profesor Titular")
+            new Professor(1L, "77643987X", "Toni", "Cuquerella", "Profesor Titular"),
+            new Professor(2L, "84637184F", "Pedro", "De la rosa", "Profesor Suplente"),
+            new Professor(3L, "87957210G", "Melisa", "Jimenez", "Profesora Ayudante")
     };
     private List<Professor> professorList = Arrays.stream(defaultProfessors).toList();
 
@@ -22,6 +22,13 @@ public class ProfessorsService {
     }
 
     public void addProfessor(Professor professor) {
+
+        for (Professor p: professorList){
+            if (p.getId().equals(professor.getId())) {
+
+                professorList.remove(p);
+            }
+        }
         professorList.add(professor);
     }
 
@@ -35,12 +42,6 @@ public class ProfessorsService {
 
     public void deleteProfessor(Long id) {
 
-        for (Professor p: professorList){
-            if (p.getId().equals(id)) {
-
-                professorList.remove(p);
-                return;
-            }
-        }
+        professorList.removeIf(professor -> professor.getId().equals(id));
     }
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+
+<div class="container" id="main-container">
+    <h2>Lista de profesores</h2>
+    <p>Los profesores que actualmente figuran en el sistema son los siguientes:</p>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Category</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="professor : ${professorList}">
+                <td th:text="${professor.getId()}"></td>
+                <td th:text="${professor.getDNI()}"></td>
+                <td th:text="${professor.getName()}"></td>
+                <td th:text="${professor.getSurname()}"></td>
+                <td th:text="${professor.getCategory()}"></td>
+                <td><a th:href="${'/professor/details/' + professor.id}">detalles</a></td>
+                <td><a th:href="${'/professor/edit/' + professor.id}">modificar</a></td>
+                <td><a th:href="${'/professor/delete/' + professor.id}">eliminar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(professorList)}"> No marks </div>
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

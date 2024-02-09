@@ -8,9 +8,8 @@ public class Professor {
     private String surname;
     private String category;
 
-    public Professor(){}
-
-    public Professor(String DNI, String name, String surname, String category) {
+    public Professor(Long id, String DNI, String name, String surname, String category) {
+        this.id = id;
         this.DNI = DNI;
         this.name = name;
         this.surname = surname;
