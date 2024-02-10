@@ -30,9 +30,9 @@
                 <td scope="row" th:text="${mark.id}"></td>
                 <td th:text="${mark.description}"></td>
                 <td th:text="${mark.score}"></td>
-                <td><a th:href="${'/mark/details/' + mark.id}"></a></td>
-                <td><a th:href="${'/mark/edit/' + mark.id}"></a></td>
-                <td><a th:href="${'/mark/delete/' + mark.id}"></a></td>
+                <td><a th:href="${'/mark/details/' + mark.id}">detalles</a></td>
+                <td><a th:href="${'/mark/edit/' + mark.id}">editar</a></td>
+                <td><a th:href="${'/mark/delete/' + mark.id}">eliminar</a></td>
             </tr>
             </tbody>
         </table>
