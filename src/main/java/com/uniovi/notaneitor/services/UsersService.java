@@ -3,6 +3,7 @@ import java.util.*;
 import javax.annotation.PostConstruct;
 
 import com.uniovi.notaneitor.repositories.UsersRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.uniovi.notaneitor.entities.*;
 
@@ -10,9 +11,11 @@ import com.uniovi.notaneitor.entities.*;
 public class UsersService {
 
     private final UsersRepository usersRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UsersService(UsersRepository usersRepository) {
+    public UsersService(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersRepository = usersRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> getUsers() {
@@ -26,7 +29,12 @@ public class UsersService {
     }
 
     public void addUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
+    }
+
+    public User getUserByDni(String dni) {
+        return usersRepository.findByDni(dni);
     }
 
     public void deleteUser(Long id) {

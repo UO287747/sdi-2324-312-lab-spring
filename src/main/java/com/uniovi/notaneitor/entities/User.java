@@ -3,6 +3,7 @@ import javax.persistence.*;
 import java.util.Set; //Colección que no admite duplicados
 
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
@@ -13,6 +14,11 @@ public class User {
     private String name;
     private String lastName;
     private String role;
+
+    private String password;
+
+    @Transient //propiedad que no se almacena en la tabla.
+    private String passwordConfirm;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Mark> marks;
@@ -37,9 +43,7 @@ public class User {
     public String getDni() {
         return dni;
     }
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
+    public void setDni(String dni) { this.dni = dni; }
 
     public String getName() {
         return name;
@@ -51,9 +55,7 @@ public class User {
     public String getLastName() {
         return lastName;
     }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
     public Set<Mark> getMarks() {
         return marks;
@@ -65,4 +67,10 @@ public class User {
     public String getFullName() {
         return this.name + " " + this.lastName;
     }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getPasswordConfirm() { return passwordConfirm; }
+    public void setPasswordConfirm(String passwordConfirm) { this.passwordConfirm = passwordConfirm; }
 }
