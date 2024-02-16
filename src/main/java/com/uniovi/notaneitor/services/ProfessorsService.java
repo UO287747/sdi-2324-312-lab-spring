@@ -1,50 +1,38 @@
 package com.uniovi.notaneitor.services;
 
 import com.uniovi.notaneitor.entities.Professor;
+import com.uniovi.notaneitor.repositories.ProfessorsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ProfessorsService {
 
-    private List<Professor> professorList = new ArrayList<>();
+    @Autowired
+    private ProfessorsRepository professorsRepository;
 
     public List<Professor> getProfessors() {
-        return professorList;
+        List<Professor> teachers = new ArrayList<>();
+        professorsRepository.findAll().forEach(teachers::add);
+        return teachers;
     }
-
-    @PostConstruct
-    private void init(){
-        professorList.add(new Professor(1L, "77643987X", "Toni", "Cuquerella", "Profesor Titular"));
-        professorList.add(new Professor(2L, "84637184F", "Pedro", "De la rosa", "Profesor Suplente"));
-        professorList.add(new Professor(3L, "87957210G", "Melisa", "Jimenez", "Profesora Ayudante"));
-
-    }
-    public void addProfessor(Professor professor) {
-
-        for (Professor p: professorList){
-            if (p.getId().equals(professor.getId())) {
-
-                professorList.remove(p);
-            }
-        }
-        professorList.add(professor);
-    }
-
     public Professor getProfessor(Long id) {
+        return professorsRepository.findById(id).get();
+    }
 
-        for (Professor p: professorList){
-            if (p.getId().equals(id)) { return p; }
-        }
-        return null;
+    public void addProfessor(Professor professor) {
+        professor.setDni(professor.getDni().toLowerCase());
+        professorsRepository.save(professor);
+    }
+
+    public Professor getProfessorByDni(String dni) {
+        return professorsRepository.findByDni(dni);
     }
 
     public void deleteProfessor(Long id) {
-
-        professorList.removeIf(professor -> professor.getId() == (id));
+        professorsRepository.deleteById(id);
     }
 }

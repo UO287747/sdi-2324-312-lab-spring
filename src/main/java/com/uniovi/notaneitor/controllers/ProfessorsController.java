@@ -5,9 +5,12 @@ import com.uniovi.notaneitor.entities.Mark;
 import com.uniovi.notaneitor.entities.Professor;
 import com.uniovi.notaneitor.services.MarksService;
 import com.uniovi.notaneitor.services.ProfessorsService;
+import com.uniovi.notaneitor.validators.ProfessorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,8 @@ public class ProfessorsController {
 
     @Autowired //Inyectar el servicio
     private ProfessorsService professorsService;
+    @Autowired
+    private ProfessorValidator professorValidator;
 
     @RequestMapping("/professor/list")
     public String getList(Model model) {
@@ -26,12 +31,19 @@ public class ProfessorsController {
     }
 
     @RequestMapping(value = "/professor/add", method = RequestMethod.POST)
-    public String setProfessor(@ModelAttribute Professor professor) {
+    public String setProfessor(@Validated Professor professor, BindingResult result, Model model) {
+        professorValidator.validate(professor, result);
+        if (result.hasErrors()){
+            model.addAttribute("professor", professor);
+            return "professor/add";
+        }
         professorsService.addProfessor(professor);
         return "redirect:/professor/list";
     }
     @RequestMapping(value = "/professor/add")
-    public String getProfessor() {
+    public String getProfessor(Model model) {
+        model.addAttribute("professorsList", professorsService.getProfessors());
+        model.addAttribute("professor", new Professor());
         return "professor/add";
     }
 
