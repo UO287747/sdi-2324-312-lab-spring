@@ -28,9 +28,10 @@ public class ProfessorValidator implements Validator {
             errors.rejectValue("dni", "Error.professor.DNI.length");}
         if (!Character.isLetter(professor.getDni().charAt(professor.getDni().length()-1))) {
             errors.rejectValue("dni", "Error.professor.DNI.letter");}
-        if (professorsService.getProfessorByDni(professor.getDni()) != null) {
+        if (professorsService.getProfessorByDni(professor.getDni().toUpperCase()) != null) {
             errors.rejectValue("dni", "Error.professor.DNI.duplicate");}
-
+        // Corrección de error: La aplicación hacía distinción entre letras mayúsculas y minúsculas en el DNI, por lo
+        // lo que podía haber DNIs repetidos como "12345678a" y "12345678A".
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
         if (professor.getName().charAt(0) == ' ' || professor.getName().charAt(professor.getName().length()-1) == ' ') {
             errors.rejectValue("name", "Error.professor.name.whitespaces");

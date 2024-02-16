@@ -24,7 +24,7 @@ public class ProfessorsService {
     }
 
     public void addProfessor(Professor professor) {
-        professor.setDni(professor.getDni().toLowerCase());
+        professor.setDni(professor.getDni().toUpperCase());
         professorsRepository.save(professor);
     }
 
