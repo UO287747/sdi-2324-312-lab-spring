@@ -55,7 +55,7 @@ public class UsersController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String dni = auth.getName();
         User activeUser = usersService.getUserByDni(dni);
-        model.addAttribute("markList", activeUser.getMarks());
+        model.addAttribute("marksList", activeUser.getMarks());
         return "home";
     }
 
