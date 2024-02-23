@@ -2,7 +2,8 @@ package com.uniovi.notaneitor.services;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.uniovi.notaneitor.entities.Professor;
 import org.springframework.stereotype.Service;
 import com.uniovi.notaneitor.entities.Mark;
 import com.uniovi.notaneitor.entities.User;
@@ -12,9 +13,11 @@ public class InsertSampleDataService {
 
     private final UsersService usersService;
     private final RolesService rolesService;
-    public InsertSampleDataService(UsersService usersService, RolesService rolesService) {
+    private final ProfessorsService professorsService;
+    public InsertSampleDataService(UsersService usersService, RolesService rolesService, ProfessorsService professorsService) {
         this.usersService = usersService;
         this.rolesService = rolesService;
+        this.professorsService = professorsService;
     }
     @PostConstruct
     public void init() {
@@ -79,5 +82,10 @@ public class InsertSampleDataService {
         usersService.addUser(user4);
         usersService.addUser(user5);
         usersService.addUser(user6);
+
+        Professor professor1 = new Professor("99999977E", "Pelayo", "Valdes", "Profesor CPM");
+        Professor professor2 = new Professor("99999988F", "Edward", "Núñez", "Profesor SDI");
+        professorsService.addProfessor(professor1);
+        professorsService.addProfessor(professor2);
     }
 }

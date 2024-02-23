@@ -14,8 +14,7 @@ public class Professor {
     private String surname;
     private String category;
 
-    public Professor(Long id, String dni, String name, String surname, String category) {
-        this.id = id;
+    public Professor(String dni, String name, String surname, String category) {
         this.dni = dni;
         this.name = name;
         this.surname = surname;
