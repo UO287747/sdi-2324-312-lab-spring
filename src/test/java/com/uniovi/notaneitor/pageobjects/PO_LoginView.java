@@ -17,8 +17,9 @@ public class PO_LoginView extends PO_NavView {
         pass.click();
         pass.clear();
         pass.sendKeys(passp);
+    }
 
-        //Pulsar el boton de Login.
+    public static void clickLogin(WebDriver driver) {
         By boton = By.className("btn");
         driver.findElement(boton).click();
     }
